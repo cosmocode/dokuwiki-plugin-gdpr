@@ -1,0 +1,7 @@
+base   limituserips
+author Michael Große
+email  dokuwiki@cosmocode.de
+date   2018-05-15
+name   limituserips plugin
+desc   Remove all IP addresses in a page's changelog that were recorded more than config:recent_days ago
+url    https://www.dokuwiki.org/plugin:limituserips
