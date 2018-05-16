@@ -67,6 +67,18 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
         $handle = fopen($changelogFile, 'rb+');
 
         $startPosition = (int)file_get_contents($cacheFile);
+
+        if ($startPosition > filesize($changelogFile)) {
+            $startPosition = 0;
+        }
+
+        if ($startPosition > 0) {
+            fseek($handle, $startPosition - 1);
+            if (fread($handle, 1) !== "\n") {
+                $startPosition = 0;
+            }
+        }
+
         fseek($handle, $startPosition);
         $ageCutoff = (int)$conf['recent_days'] * self::SECONDS_IN_A_DAY;
         // loop start
