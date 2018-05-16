@@ -55,7 +55,7 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
     }
 
     /**
-     * Remove all changelog entries that are older than $conf['recent_days']
+     * Remove IPs from changelog entries that are older than $conf['recent_days']
      *
      * @param $pageid
      */
