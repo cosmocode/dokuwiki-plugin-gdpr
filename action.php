@@ -62,26 +62,16 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
     protected function cleanPageChangelog($pageid)
     {
         global $conf;
-        $cacheFile = $this->getOurCacheFilename($pageid);
         $changelogFile = metaFN($pageid, '.changes');
+
+        $cacheFile = $this->getOurCacheFilename($pageid);
+        $cacheStartPosition = (int)file_get_contents($cacheFile);
+        $startPosition = $this->validateStartPosition($cacheStartPosition, $changelogFile);
+
         $handle = fopen($changelogFile, 'rb+');
-
-        $startPosition = (int)file_get_contents($cacheFile);
-
-        if ($startPosition > filesize($changelogFile)) {
-            $startPosition = 0;
-        }
-
-        if ($startPosition > 0) {
-            fseek($handle, $startPosition - 1);
-            if (fread($handle, 1) !== "\n") {
-                $startPosition = 0;
-            }
-        }
-
         fseek($handle, $startPosition);
         $ageCutoff = (int)$conf['recent_days'] * self::SECONDS_IN_A_DAY;
-        // loop start
+
         while (($line = fgets($handle)) !== false) {
             list($timestamp, $ip, $rest) = explode("\t", $line, 3);
             $ageOfEntry = time() - (int)$timestamp;
@@ -100,10 +90,35 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
                 throw new RuntimeException('There was an unknown error writing the changlog for page ' . $pageid);
             }
         }
-        // loop end
 
         file_put_contents($cacheFile, ftell($handle));
         fclose($handle);
+    }
+
+    /**
+     * Get the start position from cache and ensure its valid by performing some sanity checks
+     *
+     * @param int $cacheStartPosition
+     * @param string $changelogFile the changelog for pageid
+     *
+     * @return int the start position
+     */
+    public function validateStartPosition($cacheStartPosition, $changelogFile)
+    {
+        if ($cacheStartPosition > filesize($changelogFile)) {
+            return 0;
+        }
+        if ($cacheStartPosition > 0) {
+            $handle = fopen($changelogFile, 'rb');
+            fseek($handle, $cacheStartPosition - 1);
+            $previousChar = fread($handle, 1);
+            fclose($handle);
+
+            if ($previousChar !== "\n") {
+                return 0;
+            }
+        }
+        return $cacheStartPosition;
     }
 
     /**
