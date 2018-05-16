@@ -1,12 +1,12 @@
-limituserips Plugin for DokuWiki
+cleanoldips Plugin for DokuWiki
 
 Remove all IP addresses in a page's changelog that were recorded more than config:recent_days ago
 
 All documentation for this plugin can be found at
-https://www.dokuwiki.org/plugin:limituserips
+https://www.dokuwiki.org/plugin:cleanoldips
 
 If you install this plugin manually, make sure it is installed in
-lib/plugins/limituserips/ - if the folder is called different it
+lib/plugins/cleanoldips/ - if the folder is called different it
 will not work!
 
 Please refer to http://www.dokuwiki.org/plugins for additional info

@@ -1,6 +1,6 @@
 <?php
 /**
- * english language file for limituserips plugin
+ * english language file for cleanoldips plugin
  *
  * @author Michael Große <dokuwiki@cosmocode.de>
  */

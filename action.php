@@ -1,12 +1,12 @@
 <?php
 /**
- * DokuWiki Plugin limituserips (Action Component)
+ * DokuWiki Plugin cleanoldips (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Michael Große <dokuwiki@cosmocode.de>
  */
 
-class action_plugin_limituserips extends DokuWiki_Action_Plugin
+class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
 {
 
     const SECONDS_IN_A_DAY = 86400;
@@ -103,6 +103,6 @@ class action_plugin_limituserips extends DokuWiki_Action_Plugin
      */
     protected function getOurCacheFilename($pageid)
     {
-        return getCacheName($pageid . 'limituserips');
+        return getCacheName($pageid . 'cleanoldips');
     }
 }

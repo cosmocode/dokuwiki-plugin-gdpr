@@ -1,14 +1,14 @@
 <?php
 
 /**
- * General tests for the limituserips plugin
+ * General tests for the cleanoldips plugin
  *
- * @group plugin_limituserips
+ * @group plugin_cleanoldips
  * @group plugins
  */
-class cleaning_plugin_limituserips_test extends DokuWikiTest
+class cleaning_plugin_cleanoldips_test extends DokuWikiTest
 {
-    protected $pluginsEnabled = ['limituserips'];
+    protected $pluginsEnabled = ['cleanoldips'];
 
     protected $yesterday;
 
