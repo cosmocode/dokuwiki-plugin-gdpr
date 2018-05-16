@@ -21,6 +21,7 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
     public function register(Doku_Event_Handler $controller)
     {
         $controller->register_hook('INDEXER_TASKS_RUN', 'BEFORE', $this, 'handleIndexerTasksRun');
+        $controller->register_hook('TASK_RECENTCHANGES_TRIM', 'BEFORE', $this, 'initiateMediaChangelogClean');
     }
 
     /**
@@ -53,6 +54,36 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
         touch($cacheFile);
 
         $this->cleanChangelog($ID, $changelogFN);
+    }
+
+    /**
+     * [Custom event handler which performs action]
+     *
+     * Called for event: TASK_RECENTCHANGES_TRIM
+     *
+     * @param Doku_Event $event  event object by reference
+     * @param mixed      $param  [the parameters passed as fifth argument to register_hook() when this
+     *                           handler was registered]
+     *
+     * @return void
+     */
+    public function initiateMediaChangelogClean(Doku_Event $event, $param)
+    {
+        if (!$event->data['isMedia']) {
+            return;
+        }
+
+        foreach ($event->data['removedChangelogLines'] as $mediaChangelogLine) {
+            list(, , , $mediaID,) = explode("\t", $mediaChangelogLine, 5);
+
+            $changelogFN = mediaMetaFN($mediaID, '.changes');
+            if (!file_exists($changelogFN)) {
+                continue;
+            }
+
+            touch($this->getOurCacheFilename($mediaID));
+            $this->cleanChangelog($mediaID, $changelogFN);
+        }
     }
 
     /**
