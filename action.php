@@ -37,7 +37,8 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
     public function handleIndexerTasksRun(Doku_Event $event, $param)
     {
         global $ID;
-        if (!file_exists(metaFN($ID, '.changes'))) {
+        $changelogFN = metaFN($ID, '.changes');
+        if (!file_exists($changelogFN)) {
             return;
         }
         $cacheFile = $this->getOurCacheFilename($ID);
@@ -51,24 +52,24 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
 
         touch($cacheFile);
 
-        $this->cleanPageChangelog($ID);
+        $this->cleanChangelog($ID, $changelogFN);
     }
 
     /**
      * Remove IPs from changelog entries that are older than $conf['recent_days']
      *
-     * @param $pageid
+     * @param string $id
+     * @param string $changelogFN
      */
-    protected function cleanPageChangelog($pageid)
+    protected function cleanChangelog($id, $changelogFN)
     {
         global $conf;
-        $changelogFile = metaFN($pageid, '.changes');
 
-        $cacheFile = $this->getOurCacheFilename($pageid);
+        $cacheFile = $this->getOurCacheFilename($id);
         $cacheStartPosition = (int)file_get_contents($cacheFile);
-        $startPosition = $this->validateStartPosition($cacheStartPosition, $changelogFile);
+        $startPosition = $this->validateStartPosition($cacheStartPosition, $changelogFN);
 
-        $handle = fopen($changelogFile, 'rb+');
+        $handle = fopen($changelogFN, 'rb+');
         fseek($handle, $startPosition);
         $ageCutoff = (int)$conf['recent_days'] * self::SECONDS_IN_A_DAY;
 
@@ -87,7 +88,7 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
             fseek($handle, $writeOffset);
             $bytesWritten = fwrite($handle, $cleanedLine);
             if ($bytesWritten === false) {
-                throw new RuntimeException('There was an unknown error writing the changlog for page ' . $pageid);
+                throw new RuntimeException('There was an unknown error writing the changlog for ' . $id);
             }
         }
 
