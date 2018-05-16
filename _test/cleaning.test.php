@@ -49,4 +49,48 @@ class cleaning_plugin_cleanoldips_test extends DokuWikiTest
 
     }
 
+    public function dataProvider_validateStartPosition()
+    {
+        return [
+            [
+                0,
+                0,
+                'Startposition 0 should remain 0',
+            ],
+            [
+                48,
+                48,
+                'valid start position should remain unchanged',
+            ],
+            [
+                55,
+                0,
+                'Startposition in the middle of a string should become 0',
+            ],
+            [
+                350,
+                0,
+                'Startposition that is outside the file should become 0',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProvider_validateStartPosition
+     *
+     * @param $inputStartPosition
+     * @param $expectedStartPosition
+     * @param $msg
+     */
+    public function test_validateStartPosition($inputStartPosition, $expectedStartPosition, $msg)
+    {
+        global $ID;
+        /** @var action_plugin_cleanoldips $changelogCleaner */
+        $changelogCleaner = plugin_load('action', 'cleanoldips');
+
+        $actualStartPosition = $changelogCleaner->validateStartPosition($inputStartPosition, metaFN($ID, '.changes'));
+
+        $this->assertEquals($expectedStartPosition, $actualStartPosition, $msg);
+    }
+
 }
