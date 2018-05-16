@@ -9,6 +9,13 @@ php:
 env:
   - DOKUWIKI=master
   - DOKUWIKI=stable
-before_install: wget https://raw.github.com/splitbrain/dokuwiki-travis/master/travis.sh
+before_install:
+  - wget https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+  - php phpcs.phar
+  - wget https://raw.github.com/splitbrain/dokuwiki-travis/master/travis.sh
 install: sh travis.sh
-script: cd _test && phpunit --stderr --group plugin_limituserips
+script:
+  - cd _test
+  - phpunit --configuration=../lib/plugins/limituserips/phpunit.xml --group plugin_limituserips --coverage-clover=coverage.clover
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover --repository=g/$TRAVIS_REPO_SLUG --revision=$TRAVIS_COMMIT
