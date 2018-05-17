@@ -43,7 +43,7 @@ class action_plugin_cleandeletedusernames extends DokuWiki_Action_Plugin
 
         $username = $event->data['params'][0][0];
         $cacheFN = $this->getCacheFN('users');
-        file_put_contents($cacheFN, $username, FILE_APPEND);
+        file_put_contents($cacheFN, $username . "\n", FILE_APPEND);
     }
 
     /**
@@ -65,7 +65,7 @@ class action_plugin_cleandeletedusernames extends DokuWiki_Action_Plugin
         }
 
         $usersToDelete = file($deleteUserCacheFile);
-        $this->cleanUsernameFromChangelogs($usersToDelete[0]);
+        $this->cleanUsernameFromChangelogs(trim($usersToDelete[0]));
 
         if ($this->didMeaningfulWork) {
             $event->preventDefault();
