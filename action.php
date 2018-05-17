@@ -93,6 +93,9 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
      */
     protected function cleanChangelog($id, $changelogFN)
     {
+        if (!file_exists($changelogFN)) {
+            return;
+        }
         global $conf;
 
         $cacheFile = $this->getOurCacheFilename($id, true);
