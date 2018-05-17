@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ruleset name="DokuWiki Coding Standard Standard" namespace="DokuWiki\CS\Standard">
+    <description>Coding Standard used for DokuWiki</description>
+
+    <!-- default config -->
+    <arg name="colors"/>
+    <arg value="sp"/>
+    <arg name="extensions" value="php"/>
+
+    <!-- where to look -->
+    <file>.</file>
+
+    <!-- skip these completely -->
+    <exclude-pattern>*/lang/*/lang.php</exclude-pattern>
+    <exclude-pattern>*/lang/*/settings.php</exclude-pattern>
+    <exclude-pattern>*/_test/*</exclude-pattern>
+
+    <!-- rules on top of PSR-2 -->
+    <rule ref="PSR2">
+        <!-- the following rule is not in PSR-2 and breaks the guardian pattern -->
+        <exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed"/>
+
+        <!-- we have lots of legacy classes without name spaces -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+    </rule>
+
+    <!-- disable some rules for certain paths, for legacy support -->
+    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+        <exclude-pattern>action.php</exclude-pattern>
+        <exclude-pattern>action/*.php</exclude-pattern>
+        <exclude-pattern>syntax.php</exclude-pattern>
+        <exclude-pattern>syntax/*.php</exclude-pattern>
+        <exclude-pattern>helper.php</exclude-pattern>
+        <exclude-pattern>helper/*.php</exclude-pattern>
+        <exclude-pattern>renderer.php</exclude-pattern>
+        <exclude-pattern>renderer/*.php</exclude-pattern>
+        <exclude-pattern>admin.php</exclude-pattern>
+        <exclude-pattern>admin/*.php</exclude-pattern>
+        <exclude-pattern>remote.php</exclude-pattern>
+        <exclude-pattern>remote/*.php</exclude-pattern>
+        <exclude-pattern>auth.php</exclude-pattern>
+        <exclude-pattern>auth/*.php</exclude-pattern>
+        <exclude-pattern>cli.php</exclude-pattern>
+        <exclude-pattern>cli/*.php</exclude-pattern>
+    </rule>
+
+</ruleset>
