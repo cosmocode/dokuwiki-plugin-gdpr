@@ -39,6 +39,7 @@ class cli_plugin_cleanoldips extends DokuWiki_CLI_Plugin
         $searchOpts = array('depth' => 0, 'skipacl' => true);
 
         $this->log('info', 'Collecting pages...');
+        $pagedata = [];
         search($pagedata, $conf['datadir'], 'search_allpages', $searchOpts);
         $pages = array_column($pagedata, 'id');
         $this->log('info', count($pages) . ' pages found.');
@@ -52,6 +53,7 @@ class cli_plugin_cleanoldips extends DokuWiki_CLI_Plugin
         $this->log('success', 'The page changelogs have been cleaned.');
 
         $this->log('info', 'Collecting media files...');
+        $mediadata = [];
         search($mediadata, $conf['mediadir'], 'search_media', $searchOpts);
         $media = array_column($mediadata, 'id');
         $this->log('info', count($media) . ' media files found.');
