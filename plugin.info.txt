@@ -1,7 +1,7 @@
 base   cleandeletedusernames
 author Michael Große
 email  dokuwiki@cosmocode.de
-date   2018-05-16
+date   2018-05-17
 name   cleandeletedusernames plugin
 desc   Anonymize the username of deleted users in all changelogs
 url    https://www.dokuwiki.org/plugin:cleanDeletedUsernames
