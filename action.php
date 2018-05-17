@@ -81,7 +81,6 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
                 continue;
             }
 
-            touch($this->getOurCacheFilename($mediaID));
             $this->cleanChangelog($mediaID, $changelogFN);
         }
     }
@@ -96,7 +95,7 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
     {
         global $conf;
 
-        $cacheFile = $this->getOurCacheFilename($id);
+        $cacheFile = $this->getOurCacheFilename($id, true);
         $cacheStartPosition = (int)file_get_contents($cacheFile);
         $startPosition = $this->validateStartPosition($cacheStartPosition, $changelogFN);
 
@@ -157,11 +156,16 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
      * Get the filename of this plugin's cachefile for a page
      *
      * @param string $pageid full id of the page
+     * @param bool   $create create the cache file if it doesn't exists
      *
      * @return string the filename of this plugin's cachefile
      */
-    protected function getOurCacheFilename($pageid)
+    protected function getOurCacheFilename($pageid, $create = false)
     {
-        return getCacheName($pageid . 'cleanoldips');
+        $cacheFN = getCacheName('_' . $pageid . 'cleanoldips');
+        if ($create && !file_exists($cacheFN)) {
+            touch($cacheFN);
+        }
+        return $cacheFN;
     }
 }
