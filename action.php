@@ -91,7 +91,7 @@ class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
      * @param string $id
      * @param string $changelogFN
      */
-    protected function cleanChangelog($id, $changelogFN)
+    public function cleanChangelog($id, $changelogFN)
     {
         if (!file_exists($changelogFN)) {
             return;
