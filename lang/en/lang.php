@@ -1,7 +1,5 @@
 <?php
 /**
- * English language file for cleanoldips plugin
- *
  * @author Michael Große <dokuwiki@cosmocode.de>
  */
 

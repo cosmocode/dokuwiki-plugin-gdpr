@@ -9,7 +9,7 @@
 
 use splitbrain\phpcli\Options;
 
-class cli_plugin_cleanoldips extends DokuWiki_CLI_Plugin
+class cli_plugin_gdpr extends DokuWiki_CLI_Plugin
 {
 
     /**
@@ -44,8 +44,8 @@ class cli_plugin_cleanoldips extends DokuWiki_CLI_Plugin
         $pages = array_column($pagedata, 'id');
         $this->log('info', count($pages) . ' pages found.');
         $this->log('info', 'Cleaning page changelogs...');
-        /** @var action_plugin_cleanoldips $action */
-        $action = plugin_load('action', 'cleanoldips');
+        /** @var action_plugin_gdpr_oldips $action */
+        $action = plugin_load('action', 'gdpr_oldips');
         foreach ($pages as $pageid) {
             $this->log('debug', 'Cleaning changelog for page ' . $pageid);
             $action->cleanChangelog($pageid, metaFN($pageid, '.changes'));

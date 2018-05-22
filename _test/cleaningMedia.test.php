@@ -3,7 +3,7 @@
 /**
  * General tests for the cleanoldips plugin
  *
- * @group plugin_cleanoldips
+ * @group plugin_gdpr
  * @group plugins
  */
 class cleaningMedia_plugin_cleanoldips_test extends DokuWikiTest

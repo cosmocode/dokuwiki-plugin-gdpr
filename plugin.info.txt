@@ -1,7 +1,8 @@
-base   cleanoldips
+<<<<<<< HEAD
+base   gdpr
 author Michael Große
 email  dokuwiki@cosmocode.de
-date   2018-05-17
-name   cleanoldips plugin
-desc   Remove all IP addresses in a page's changelog that were recorded more than config:recent_days ago
-url    https://www.dokuwiki.org/plugin:cleanoldips
+date   2018-05-22
+name   GDPR compliancy plugin
+desc   Help with data deletion and data avoidance clauses of the GDPR
+url    https://www.dokuwiki.org/plugin:gdpr

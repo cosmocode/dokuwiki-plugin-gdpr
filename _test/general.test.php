@@ -1,12 +1,12 @@
 <?php
 
 /**
- * General tests for the cleanoldips plugin
+ * General tests for the gdpr plugin
  *
- * @group plugin_cleanoldips
+ * @group plugin_gdpr
  * @group plugins
  */
-class general_plugin_cleanoldips_test extends DokuWikiTest
+class general_plugin_gdpr_test extends DokuWikiTest
 {
 
     /**
@@ -27,7 +27,7 @@ class general_plugin_cleanoldips_test extends DokuWikiTest
         $this->assertArrayHasKey('desc', $info);
         $this->assertArrayHasKey('url', $info);
 
-        $this->assertEquals('cleanoldips', $info['base']);
+        $this->assertEquals('gdpr', $info['base']);
         $this->assertRegExp('/^https?:\/\//', $info['url']);
         $this->assertTrue(mail_isvalid($info['email']));
         $this->assertRegExp('/^\d\d\d\d-\d\d-\d\d$/', $info['date']);
@@ -52,7 +52,7 @@ class general_plugin_cleanoldips_test extends DokuWikiTest
         $this->assertEquals(
             gettype($conf),
             gettype($meta),
-            'Both ' . DOKU_PLUGIN . 'cleanoldips/conf/default.php and ' . DOKU_PLUGIN . 'cleanoldips/conf/metadata.php have to exist and contain the same keys.'
+            'Both ' . DOKU_PLUGIN . 'gdpr/conf/default.php and ' . DOKU_PLUGIN . 'gdpr/conf/metadata.php have to exist and contain the same keys.'
         );
 
         if (gettype($conf) != 'NULL' && gettype($meta) != 'NULL') {
@@ -60,7 +60,7 @@ class general_plugin_cleanoldips_test extends DokuWikiTest
                 $this->assertArrayHasKey(
                     $key,
                     $meta,
-                    'Key $meta[\'' . $key . '\'] missing in ' . DOKU_PLUGIN . 'cleanoldips/conf/metadata.php'
+                    'Key $meta[\'' . $key . '\'] missing in ' . DOKU_PLUGIN . 'gdpr/conf/metadata.php'
                 );
             }
 
@@ -68,7 +68,7 @@ class general_plugin_cleanoldips_test extends DokuWikiTest
                 $this->assertArrayHasKey(
                     $key,
                     $conf,
-                    'Key $conf[\'' . $key . '\'] missing in ' . DOKU_PLUGIN . 'cleanoldips/conf/default.php'
+                    'Key $conf[\'' . $key . '\'] missing in ' . DOKU_PLUGIN . 'gdpr/conf/default.php'
                 );
             }
         }

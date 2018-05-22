@@ -6,7 +6,7 @@
  * @author  Michael Große <dokuwiki@cosmocode.de>
  */
 
-class action_plugin_cleanoldips extends DokuWiki_Action_Plugin
+class action_plugin_gdpr_oldips extends DokuWiki_Action_Plugin
 {
 
     const SECONDS_IN_A_DAY = 86400;
