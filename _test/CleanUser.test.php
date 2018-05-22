@@ -1,15 +1,17 @@
 <?php
 
+namespace dokuwiki\plugin\gdpr\test;
+
 /**
- * General tests for the gdpr plugin
+ * User cleaning tests for the gdpr plugin
  *
  * @group plugin_gdpr
  * @group plugins
  */
-class cleaning_plugin_cleandeletedusernames_test extends DokuWikiTest
+class CleanUserTest extends \DokuWikiTest
 {
 
-    protected $pluginsEnabled = ['cleandeletedusernames'];
+    protected $pluginsEnabled = ['gdpr'];
 
     public function setUp()
     {

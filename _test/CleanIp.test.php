@@ -1,14 +1,16 @@
 <?php
 
+namespace dokuwiki\plugin\gdpr\test;
+
 /**
- * General tests for the cleanoldips plugin
+ * Page IP cleaning tests for the gdpr plugin
  *
  * @group plugin_gdpr
  * @group plugins
  */
-class cleaning_plugin_cleanoldips_test extends DokuWikiTest
+class CleanIpTest extends \DokuWikiTest
 {
-    protected $pluginsEnabled = ['cleanoldips'];
+    protected $pluginsEnabled = ['gdpr'];
 
     protected $yesterday;
 
@@ -85,8 +87,8 @@ class cleaning_plugin_cleanoldips_test extends DokuWikiTest
     public function test_validateStartPosition($inputStartPosition, $expectedStartPosition, $msg)
     {
         global $ID;
-        /** @var action_plugin_cleanoldips $changelogCleaner */
-        $changelogCleaner = plugin_load('action', 'cleanoldips');
+        /** @var \action_plugin_gdpr_oldips $changelogCleaner */
+        $changelogCleaner = plugin_load('action', 'gdpr_oldips');
 
         $actualStartPosition = $changelogCleaner->validateStartPosition($inputStartPosition, metaFN($ID, '.changes'));
 

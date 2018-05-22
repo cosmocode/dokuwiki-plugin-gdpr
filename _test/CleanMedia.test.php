@@ -1,14 +1,16 @@
 <?php
 
+namespace dokuwiki\plugin\gdpr\test;
+
 /**
- * General tests for the cleanoldips plugin
+ * Media IP cleaning tests for the gdpr plugin
  *
  * @group plugin_gdpr
  * @group plugins
  */
-class cleaningMedia_plugin_cleanoldips_test extends DokuWikiTest
+class CleanMediaTest extends \DokuWikiTest
 {
-    protected $pluginsEnabled = ['cleanoldips'];
+    protected $pluginsEnabled = ['gdpr'];
 
     protected $yesterday;
 

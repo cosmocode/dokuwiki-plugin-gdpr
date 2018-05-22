@@ -1,12 +1,14 @@
 <?php
 
+namespace dokuwiki\plugin\gdpr\test;
+
 /**
  * General tests for the gdpr plugin
  *
  * @group plugin_gdpr
  * @group plugins
  */
-class general_plugin_gdpr_test extends DokuWikiTest
+class GeneralTest extends \DokuWikiTest
 {
 
     /**
