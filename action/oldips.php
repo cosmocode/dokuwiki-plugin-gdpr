@@ -1,6 +1,6 @@
 <?php
 /**
- * DokuWiki Plugin cleanoldips (Action Component)
+ * DokuWiki Plugin gdpr (Action Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Michael Große <dokuwiki@cosmocode.de>
