@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 base   gdpr
 author Michael Große
 email  dokuwiki@cosmocode.de
