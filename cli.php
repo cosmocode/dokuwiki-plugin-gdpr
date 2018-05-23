@@ -48,7 +48,7 @@ class cli_plugin_gdpr extends DokuWiki_CLI_Plugin
         $action = plugin_load('action', 'gdpr_oldips');
         foreach ($pages as $pageid) {
             $this->log('debug', 'Cleaning changelog for page ' . $pageid);
-            $action->cleanChangelog($pageid, metaFN($pageid, '.changes'));
+            $action->cleanChangelog(metaFN($pageid, '.changes'));
         }
         $this->log('success', 'The page changelogs have been cleaned.');
 
@@ -60,7 +60,7 @@ class cli_plugin_gdpr extends DokuWiki_CLI_Plugin
         $this->log('info', 'Cleaning media changelogs...');
         foreach ($media as $mediaid) {
             $this->log('debug', 'Cleaning changelog for media file ' . $mediaid);
-            $action->cleanChangelog($mediaid, mediaMetaFN($mediaid, '.changes'));
+            $action->cleanChangelog(mediaMetaFN($mediaid, '.changes'));
         }
         $this->log('success', 'The media changelogs have been cleaned.');
     }
