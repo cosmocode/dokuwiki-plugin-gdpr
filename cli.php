@@ -39,28 +39,26 @@ class cli_plugin_gdpr extends DokuWiki_CLI_Plugin
         $searchOpts = array('depth' => 0, 'skipacl' => true);
 
         $this->log('info', 'Collecting pages...');
-        $pagedata = [];
-        search($pagedata, $conf['datadir'], 'search_allpages', $searchOpts);
-        $pages = array_column($pagedata, 'id');
-        $this->log('info', count($pages) . ' pages found.');
+        /** @var helper_plugin_gdpr_utils $gdprUtils */
+        $gdprUtils = plugin_load('helper', 'gdpr_utils');
+        $pageChangelogs = $gdprUtils->collectChangelogs(dir($conf['metadir']));
+        $this->log('info', count($pageChangelogs) . ' pages found.');
         $this->log('info', 'Cleaning page changelogs...');
         /** @var action_plugin_gdpr_oldips $action */
         $action = plugin_load('action', 'gdpr_oldips');
-        foreach ($pages as $pageid) {
-            $this->log('debug', 'Cleaning changelog for page ' . $pageid);
-            $action->cleanChangelog($pageid, metaFN($pageid, '.changes'));
+        foreach ($pageChangelogs as $changelogFN) {
+            $this->log('debug', 'Cleaning changelog ' . $changelogFN);
+            $action->cleanChangelog($changelogFN);
         }
         $this->log('success', 'The page changelogs have been cleaned.');
 
         $this->log('info', 'Collecting media files...');
-        $mediadata = [];
-        search($mediadata, $conf['mediadir'], 'search_media', $searchOpts);
-        $media = array_column($mediadata, 'id');
-        $this->log('info', count($media) . ' media files found.');
+        $mediaChangelogs = $gdprUtils->collectChangelogs(dir($conf['mediametadir']));
+        $this->log('info', count($mediaChangelogs) . ' media files found.');
         $this->log('info', 'Cleaning media changelogs...');
-        foreach ($media as $mediaid) {
-            $this->log('debug', 'Cleaning changelog for media file ' . $mediaid);
-            $action->cleanChangelog($mediaid, mediaMetaFN($mediaid, '.changes'));
+        foreach ($mediaChangelogs as $changelogFN) {
+            $this->log('debug', 'Cleaning media changelog ' . $changelogFN);
+            $action->cleanChangelog($changelogFN);
         }
         $this->log('success', 'The media changelogs have been cleaned.');
     }

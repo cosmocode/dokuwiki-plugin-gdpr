@@ -42,7 +42,7 @@ class action_plugin_gdpr_oldips extends DokuWiki_Action_Plugin
         if (!file_exists($changelogFN)) {
             return;
         }
-        $cacheFile = $this->getOurCacheFilename($ID);
+        $cacheFile = $this->getOurCacheFilename($changelogFN);
         if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < self::SECONDS_IN_A_DAY)) {
             // we already cleaned this page in the last 24h
             return;
@@ -53,7 +53,7 @@ class action_plugin_gdpr_oldips extends DokuWiki_Action_Plugin
 
         touch($cacheFile);
 
-        $this->cleanChangelog($ID, $changelogFN);
+        $this->cleanChangelog($changelogFN);
     }
 
     /**
@@ -81,24 +81,23 @@ class action_plugin_gdpr_oldips extends DokuWiki_Action_Plugin
                 continue;
             }
 
-            $this->cleanChangelog($mediaID, $changelogFN);
+            $this->cleanChangelog($changelogFN);
         }
     }
 
     /**
      * Remove IPs from changelog entries that are older than $conf['recent_days']
      *
-     * @param string $id
      * @param string $changelogFN
      */
-    public function cleanChangelog($id, $changelogFN)
+    public function cleanChangelog($changelogFN)
     {
         if (!file_exists($changelogFN)) {
             return;
         }
         global $conf;
 
-        $cacheFile = $this->getOurCacheFilename($id, true);
+        $cacheFile = $this->getOurCacheFilename($changelogFN, true);
         $cacheStartPosition = (int)file_get_contents($cacheFile);
         $startPosition = $this->validateStartPosition($cacheStartPosition, $changelogFN);
 
@@ -121,7 +120,7 @@ class action_plugin_gdpr_oldips extends DokuWiki_Action_Plugin
             fseek($handle, $writeOffset);
             $bytesWritten = fwrite($handle, $cleanedLine);
             if ($bytesWritten === false) {
-                throw new RuntimeException('There was an unknown error writing the changlog for ' . $id);
+                throw new RuntimeException('There was an unknown error writing the changlog ' . $changelogFN);
             }
         }
 
@@ -158,14 +157,14 @@ class action_plugin_gdpr_oldips extends DokuWiki_Action_Plugin
     /**
      * Get the filename of this plugin's cachefile for a page
      *
-     * @param string $pageid full id of the page
-     * @param bool   $create create the cache file if it doesn't exists
+     * @param string $changelogFN filename of the changelog
+     * @param bool   $create      create the cache file if it doesn't exists
      *
      * @return string the filename of this plugin's cachefile
      */
-    protected function getOurCacheFilename($pageid, $create = false)
+    protected function getOurCacheFilename($changelogFN, $create = false)
     {
-        $cacheFN = getCacheName('_' . $pageid . 'cleanoldips');
+        $cacheFN = getCacheName('_' . $changelogFN . 'cleanoldips');
         if ($create && !file_exists($cacheFN)) {
             touch($cacheFN);
         }
