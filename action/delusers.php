@@ -211,12 +211,14 @@ class action_plugin_gdpr_delusers extends DokuWiki_Action_Plugin
         $changelogCacheFN = $this->getCacheFN('changelogs');
         if (!file_exists($changelogCacheFN)) {
             global $conf;
+            /** @var helper_plugin_gdpr_utils $gdprUtils */
+            $gdprUtils = plugin_load('helper', 'gdpr_utils');
 
             $metaDir = $conf['metadir'];
             $mediaMetaDir = $conf['mediametadir'];
 
-            $changelogs = $this->collectChangelogs(dir($metaDir));
-            $changelogs = array_merge($changelogs, $this->collectChangelogs(dir($mediaMetaDir)));
+            $changelogs = $gdprUtils->collectChangelogs(dir($metaDir));
+            $changelogs = array_merge($changelogs, $gdprUtils->collectChangelogs(dir($mediaMetaDir)));
 
             file_put_contents($changelogCacheFN, implode("\n", $changelogs));
             $this->didMeaningfulWork = true;
@@ -232,39 +234,6 @@ class action_plugin_gdpr_delusers extends DokuWiki_Action_Plugin
 
         unlink($changelogCacheFN);
         return false;
-    }
-
-    /**
-     * Recursively collect all (page|media) changlogs within the current directory
-     *
-     * @param Directory $dir
-     *
-     * @return string[] filenames of changelogs in the current directory and subdirectories
-     */
-    protected function collectChangelogs(Directory $dir)
-    {
-        $changlogs = [];
-        while (false !== ($entry = $dir->read())) {
-            if ($entry === '.' || $entry === '..') {
-                continue;
-            }
-            $fn = $dir->path . '/' . $entry;
-            if (is_dir($fn)) {
-                $changlogs = array_merge($changlogs, $this->collectChangelogs(dir($fn)));
-                continue;
-            }
-            list($extension, $basename) = explode('.', strrev($entry), 2);
-            $extension = strrev($extension);
-            $basename = strrev($basename);
-            if ($extension !== 'changes') {
-                continue;
-            }
-            if ($basename[0] === '_') {
-                continue;
-            }
-            $changlogs[] = $dir->path . '/' . $entry;
-        }
-        return $changlogs;
     }
 
     /**
