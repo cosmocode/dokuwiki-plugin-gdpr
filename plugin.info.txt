@@ -1,7 +1,7 @@
 base   gdpr
 author Michael Große
 email  dokuwiki@cosmocode.de
-date   2018-05-23
+date   2018-05-24
 name   GDPR compliancy plugin
 desc   Help with data deletion and data avoidance clauses of the GDPR
 url    https://www.dokuwiki.org/plugin:gdpr
