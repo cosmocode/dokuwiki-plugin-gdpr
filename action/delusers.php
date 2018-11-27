@@ -126,7 +126,7 @@ class action_plugin_gdpr_delusers extends DokuWiki_Action_Plugin
         $changelogCacheFN = $this->getCacheFN('changelogs');
         $lines = file($changelogCacheFN);
         array_shift($lines);
-        file_put_contents($changelogCacheFN, implode("\n", $lines));
+        file_put_contents($changelogCacheFN, implode('', $lines));
     }
 
     /**
