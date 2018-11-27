@@ -164,7 +164,7 @@ class action_plugin_gdpr_oldips extends DokuWiki_Action_Plugin
      */
     protected function getOurCacheFilename($changelogFN, $create = false)
     {
-        $cacheFN = getCacheName('_' . $changelogFN , '.plugin_gdpr');
+        $cacheFN = getCacheName('_' . $changelogFN, '.plugin_gdpr');
         if ($create && !file_exists($cacheFN)) {
             touch($cacheFN);
         }
