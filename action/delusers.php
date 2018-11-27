@@ -247,11 +247,11 @@ class action_plugin_gdpr_delusers extends DokuWiki_Action_Plugin
     {
         switch ($key) {
             case 'users':
-                return getCacheName('_cleandeletedusernames_users');
+                return getCacheName('_cleandeletedusernames_users', ".$key.gdpr"); // 24603dd46ffc3f959fda54e307304714
             case 'changelogs':
-                return getCacheName('_cleandeletedusernames_changelogs');
+                return getCacheName('_cleandeletedusernames_changelogs', ".$key.gdpr"); // c665cd8d3071e0e7c57ae12d97a869cd
             case 'counter':
-                return getCacheName('_cleandeletedusernames_counter');
+                return getCacheName('_cleandeletedusernames_counter', ".$key.gdpr"); // 141cd02168fca864e927e12639b0272e
             default:
                 throw new InvalidArgumentException('Unknown cache key provided: ' . $key);
         }
