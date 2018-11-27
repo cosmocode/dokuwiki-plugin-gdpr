@@ -30,7 +30,7 @@ class CleanUserTest extends \DokuWikiTest
     public function tearDown()
     {
         parent::tearDown();
-        unlink(getCacheName('_cleandeletedusernames_counter'));
+        unlink(getCacheName('_cleandeletedusernames_counter', '.counter.gdpr'));
     }
 
     public function testCleaningOneUser()
