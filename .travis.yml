@@ -2,6 +2,7 @@
 
 language: php
 php:
+  - "7.3"
   - "7.2"
   - "7.1"
   - "7.0"
@@ -16,6 +17,6 @@ before_install:
 install: sh travis.sh
 script:
   - cd _test
-  - phpunit --configuration=../lib/plugins/gdpr/phpunit.xml --group plugin_gdpr --coverage-clover=coverage.clover
+  - ./phpunit.phar --configuration=../lib/plugins/gdpr/phpunit.xml --group plugin_gdpr --coverage-clover=coverage.clover
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover --repository=g/$TRAVIS_REPO_SLUG --revision=$TRAVIS_COMMIT
